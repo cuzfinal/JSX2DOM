@@ -9,6 +9,8 @@ const createElement = (tag: string, props: propsType, ...children: (string | HTM
     children.forEach(node => {
       if(typeof node === 'string') {
         element.appendChild(document.createTextNode(node))
+      } else if(node instanceof Array) {
+        node.forEach(el => element.appendChild(el))
       } else {
         element.appendChild(node)
       }
