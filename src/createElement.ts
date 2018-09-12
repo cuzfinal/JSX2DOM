@@ -1,19 +1,25 @@
-import {attrTypes} from "./typs"
+import {propsType} from "./types"
 
 const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i
 
-export const createElement = (tag: string, attrs?: attrTypes[], children?: any[], recursive?: boolean) => {
-  if(tag === 'text') return document.createTextNode('text')
+const createElement = (tag: string, props: propsType, ...children: (string | HTMLElement)[]): HTMLElement => {
   const element = document.createElement(tag)
-  Object.keys(attrs).map(key => setAccessor(element, key, attrs[key]))
-  children.forEach(node => element.appendChild(createElement(node.tag, node.attrs, node.children, true)))
-  !recursive && element.normalize()
+  if(props != null) Object.keys(props).map(key => setAccessor(element, key, props[key]))
+  if(children != null) {
+    children.forEach(node => {
+      if(typeof node === 'string') {
+        element.appendChild(document.createTextNode(node))
+      } else {
+        element.appendChild(node)
+      }
+    })
+  }
+  element.normalize()
   return element
 }
 
-export const setAccessor = (node: HTMLElement, name: string, value: any) => {
+const setAccessor = (node: HTMLElement, name: string, value: any) => {
   if (name === 'className') name = 'class'
-
   else if (name === 'class') {
     node.className = value || ''
   }
@@ -40,4 +46,8 @@ export const setAccessor = (node: HTMLElement, name: string, value: any) => {
     } catch (e) { }
     if (value == null || value === false) node.removeAttribute(name)
   }
+}
+
+export default {
+  createElement
 }
