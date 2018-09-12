@@ -1,4 +1,4 @@
-import {propsType} from "./types"
+import {propTypes} from "./types"
 
 const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i
 
@@ -41,7 +41,7 @@ const flatArry = (params: any[]): any[] => {
   }, [])
 }
 
-export const createElement = (tag: string, props: propsType, ...children: (string | HTMLElement)[]): HTMLElement => {
+export const createElement = (tag: string, props: propTypes, ...children: (string | HTMLElement)[]): HTMLElement => {
   const element = document.createElement(tag)
   if(props != null) Object.keys(props).map(key => setAccessor(element, key, props[key]))
   if(children != null) {
