@@ -41,7 +41,7 @@ const flatArry = (params: any[]): any[] => {
   }, [])
 }
 
-const createElement = (tag: string, props: propsType, ...children: (string | HTMLElement)[]): HTMLElement => {
+export const createElement = (tag: string, props: propsType, ...children: (string | HTMLElement)[]): HTMLElement => {
   const element = document.createElement(tag)
   if(props != null) Object.keys(props).map(key => setAccessor(element, key, props[key]))
   if(children != null) {
@@ -56,8 +56,4 @@ const createElement = (tag: string, props: propsType, ...children: (string | HTM
   }
   element.normalize()
   return element
-}
-
-export default {
-  createElement
 }

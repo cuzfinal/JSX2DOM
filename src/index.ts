@@ -1,3 +1,5 @@
-import {createElement} from "./createElement"
+import { createElement } from "./element"
 
-export {createElement}
+export default {
+  createElement
+}
