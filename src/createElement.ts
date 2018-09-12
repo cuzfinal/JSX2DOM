@@ -2,24 +2,6 @@ import {propsType} from "./types"
 
 const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i
 
-const createElement = (tag: string, props: propsType, ...children: (string | HTMLElement)[]): HTMLElement => {
-  const element = document.createElement(tag)
-  if(props != null) Object.keys(props).map(key => setAccessor(element, key, props[key]))
-  if(children != null) {
-    children.forEach(node => {
-      if(typeof node === 'string') {
-        element.appendChild(document.createTextNode(node))
-      } else if(node instanceof Array) {
-        node.forEach(el => element.appendChild(el))
-      } else {
-        element.appendChild(node)
-      }
-    })
-  }
-  element.normalize()
-  return element
-}
-
 const setAccessor = (node: HTMLElement, name: string, value: any) => {
   if (name === 'className') name = 'class'
   else if (name === 'class') {
@@ -48,6 +30,32 @@ const setAccessor = (node: HTMLElement, name: string, value: any) => {
     } catch (e) { }
     if (value == null || value === false) node.removeAttribute(name)
   }
+}
+
+const flatArry = (params: any[]): any[] => {
+  if(!params) return []
+  return params.reduce((prev, curr) => {
+    if(curr instanceof Array) 
+      return [...prev, ...flatArry(curr)]
+    return [...prev, curr]
+  }, [])
+}
+
+const createElement = (tag: string, props: propsType, ...children: (string | HTMLElement)[]): HTMLElement => {
+  const element = document.createElement(tag)
+  if(props != null) Object.keys(props).map(key => setAccessor(element, key, props[key]))
+  if(children != null) {
+    children = flatArry(children)
+    children.forEach(node => {
+      if(typeof node === 'string') {
+        element.appendChild(document.createTextNode(node))
+      } else {
+        element.appendChild(node)
+      }
+    })
+  }
+  element.normalize()
+  return element
 }
 
 export default {
