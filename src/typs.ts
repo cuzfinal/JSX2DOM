@@ -1,3 +1,3 @@
-export type attrTypes = {
+export type propTypes = {
   [key: string]: any
 }
