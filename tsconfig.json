@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "esnext",
+    "target": "esnext",
+    "jsx": "react",
+    "jsxFactory": "JSX.createElement",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+  },
+  "include": [
+    "./src/**/*",
+    "./server/**/*"
+  ],
+  "exclude": [
+    "./node_modules/**/*"
+  ]
+}
